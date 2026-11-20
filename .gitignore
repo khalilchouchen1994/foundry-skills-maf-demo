@@ -1,0 +1,10 @@
+.venv/
+.demo-artifacts/
+__pycache__/
+.ipynb_checkpoints/
+.env*
+!.env.example
+.azure/
+tests/
+notebooks/demo_support.py
+examples/

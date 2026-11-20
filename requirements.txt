@@ -1,0 +1,9 @@
+azure-ai-projects==2.11.0
+agent-framework-core==1.26.0
+agent-framework-foundry==1.16.2
+azure-identity>=1.17,<2
+mcp==2.2.0
+httpx2>=2.5,<3
+python-dotenv>=1,<2
+PyYAML>=6,<7
+ipykernel>=6,<8
