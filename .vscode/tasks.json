@@ -1,0 +1,43 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Validate hosted agent ports",
+      "type": "aitk",
+      "command": "debug-check-prerequisites",
+      "args": {"portOccupancy": [5679, 8088]}
+    },
+    {
+      "label": "Run hosted change assessor",
+      "type": "process",
+      "command": "${workspaceFolder}\\hosted_agent\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "debugpy", "--listen", "127.0.0.1:5679", "${workspaceFolder}\\hosted_agent\\main.py"],
+      "options": {"cwd": "${workspaceFolder}"},
+      "dependsOn": ["Validate hosted agent ports"],
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": {"regexp": "^$", "file": 0, "location": 1, "message": 2},
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*",
+          "endsPattern": "Application startup complete|[Rr]unning on"
+        }
+      }
+    },
+    {
+      "label": "Open hosted agent inspector",
+      "type": "shell",
+      "command": "Write-Output '${input:openHostedAgentInspector}'",
+      "dependsOn": ["Run hosted change assessor"],
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "openHostedAgentInspector",
+      "type": "command",
+      "command": "ai-mlstudio.openTestTool",
+      "args": {"triggeredFrom": "tasks", "port": 8088}
+    }
+  ]
+}
